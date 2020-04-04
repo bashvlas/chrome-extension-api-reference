@@ -4,19 +4,103 @@
 	<head>
 
 		<meta charset="utf-8">
+
+		<link rel = "stylesheet" href = "https://fonts.googleapis.com/css?family=Roboto:300,400,500,700" >
 		<link rel = "stylesheet" href = "style.css" >
 
 	</head>
 
 	<body>
 
-		<div>
+		<div id = "root" >
 
-			example text
+			<div id = "header" >
+
+				<span>Chrome Extension API Reference</span>
+
+				<div id = "dropshadow" ></div>
+
+			</div>
+
+			<div class = "page_container" >
+
+				<div class = "page active" >
+
+					<input class = "search_input" placeholder = "Search" v-model = "query" autofocus >
+
+					<div class = "search_item_container" >
+
+						<div
+							is = "search_item_wrap"
+							v-for = "item_data in item_data_arr"
+							v-bind:level = "1"
+							v-bind:item_data = "item_data"
+							>
+						</div>
+
+					</div>
+
+				</div>
+
+			</div>
+
+		</div>
+
+		<div id = "templates" hidden >
+
+			<div class = "search_item_wrap" >
+
+				<div
+					class = "search_item"
+					v-on:click = "expanded = !expanded"
+					v-bind:class = "{
+
+					}"
+					>
+
+					<span v-html = "item_data.type" ></span>
+					<span v-text = "item_data.name" ></span>
+
+					<svg v-if = "item_data.description" class = "help_icon" viewBox="0 0 24 24" >
+						<path d="M11,18H13V16H11V18M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10,10 0 0,0 12,2M12,20C7.59,20 4,16.41 4,12C4,7.59 7.59,4 12,4C16.41,4 20,7.59 20,12C20,16.41 16.41,20 12,20M12,6A4,4 0 0,0 8,10H10A2,2 0 0,1 12,8A2,2 0 0,1 14,10C14,12 11,11.75 11,15H13C13,12.75 16,12.5 16,10A4,4 0 0,0 12,6Z" />
+					</svg>
+
+				</div>
+
+				<div
+					style = "padding: 12px;"
+					v-if = "expanded && ( item_data.description || item_data.item_data_arr )"
+				>
+
+					<div
+						class = "description"
+						v-html = "item_data.description"
+					></div>
+
+					<div
+						v-if = "item_data.item_data_arr && item_data.item_data_arr.length > 0"
+						class = 'search_item_container'
+					>
+
+						<div
+							is = "search_item_wrap"
+							v-for = "item_data in item_data.item_data_arr"
+							v-bind:item_data = "item_data"
+							v-bind:level = "level + 1"
+							>
+						</div>
+
+					</div>
+
+				</div>
+
+			</div>
 
 		</div>
 
 		<div id = "script" hidden >
+
+			<script src = "/lib/vue.min.js" ></script>
 
 			<script src = "main.js" ></script>
 
